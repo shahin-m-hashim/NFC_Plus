@@ -1,41 +1,44 @@
 import 'package:flutter/material.dart';
 
-/*
-
-Here are some important terms related to the basics of Flutter:
-
-Widgets: Widgets are the basic building blocks of a Flutter app. Everything that you see on the screen 
-is a widget, from simple text to complex UI elements.
-
-State: In Flutter, state refers to the current condition of a widget. It can change dynamically, and 
-when it does, the widget will be rebuilt.
-
-StatefulWidget: StatefulWidget is a widget that has mutable state. When the state changes, the widget
-is rebuilt.
-
-StatelessWidget: StatelessWidget is a widget that does not have mutable state. Once it is built, it does 
-not change.
-
-MaterialApp: MaterialApp is a predefined widget in Flutter that provides basic app functionality like 
-navigation, theming, and title.
-
-Scaffold: Scaffold is another predefined widget in Flutter that provides a basic visual structure for your 
-app, including a navigation drawer, app bar, and body.
-
-Layouts: In Flutter, layouts are used to position widgets on the screen. There are many types of layouts, 
-such as Row, Column, Stack, and GridView.
-
-ThemeData: ThemeData is a predefined class in Flutter that provides a set of colors and fonts that you can 
-use to style your app.
-
-MediaQuery: MediaQuery is a widget in Flutter that provides information about the device's size and 
-orientation. It can be used to create responsive UIs that adapt to different devices.
-
-Navigator: Navigator is a widget in Flutter that manages the navigation stack. You can use it to navigate 
-between screens and manage the back button.
-
-*/
-
 main() {
   runApp(app);
 }
+
+/*
+  The above is a basic Dart code for starting a Flutter application.
+
+  The main() function is the entry point for the Dart program. It is the first function that gets executed 
+  when a Dart application starts running.
+
+  In this code, the runApp() function is called with an argument app. The runApp() function is a built-in 
+  function in Flutter that is used to start the application. It takes a widget as an argument and renders 
+  it on the screen.
+
+  So, runApp(app) is starting the application by rendering the app widget on the screen.
+
+  In Flutter, an App is the top-level widget that represents the entire application. It provides the 
+  structure and composition of all the lower-level widgets used in the app.
+
+  An App widget can be defined by extending the StatelessWidget or StatefulWidget class. Typically, the 
+  MaterialApp or CupertinoApp class is used to create an App widget.
+
+  The MaterialApp widget is used to create apps with Material Design, while the CupertinoApp widget is used 
+  to create apps with Apple's Cupertino Design.
+
+  The MaterialApp widget has several important parameters, such as title, theme, home, routes, initialRoute, 
+  navigatorKey, and more. These parameters allow you to customize the app's appearance, behavior, and navigation.
+
+  The title parameter sets the title of the app, which is usually displayed in the app bar. The theme 
+  parameter sets the color scheme, typography, and other visual aspects of the app. The home parameter 
+  sets the widget that is displayed when the app is launched. The routes parameter defines a map of named 
+  routes to widgets that can be used for navigation. The initialRoute parameter sets the initial route for 
+  the app. The navigatorKey parameter provides a key to the Navigator widget, which is used for navigating
+  between screens.
+
+  Overall, the App widget is the foundation of a Flutter app, and the MaterialApp or CupertinoApp widget is 
+  usually used to create it. These widgets provide important parameters that allow you to customize the 
+  app's appearance, behavior, and navigation.
+
+*/
+
+
