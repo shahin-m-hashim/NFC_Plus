@@ -104,4 +104,60 @@ to make sure that your app looks good and works well on different screen sizes a
 your app more accessible to users and helps to improve the overall user experience.
 
 By following these guidelines, you can write clean, organized, and flexible code that is easy to maintain,
- update, and reuse in future projects.
+update, and reuse in future projects.
+
+
+Here are some important terms related to the basics of Flutter:
+
+Widgets: Widgets are the basic building blocks of a Flutter app. Everything that you see on the screen 
+is a widget, from simple text to complex UI elements.
+
+State: In Flutter, state refers to the current condition of a widget. It can change dynamically, and 
+when it does, the widget will be rebuilt.
+
+StatefulWidget: StatefulWidget is a widget that has mutable state. When the state changes, the widget
+is rebuilt.
+
+StatelessWidget: StatelessWidget is a widget that does not have mutable state. Once it is built, it does 
+not change.
+
+MaterialApp: MaterialApp is a predefined widget in Flutter that provides basic app functionality like 
+navigation, theming, and title.
+
+Scaffold: Scaffold is another predefined widget in Flutter that provides a basic visual structure for your 
+app, including a navigation drawer, app bar, and body.
+
+Layouts: In Flutter, layouts are used to position widgets on the screen. There are many types of layouts, 
+such as Row, Column, Stack, and GridView.
+
+ThemeData: ThemeData is a predefined class in Flutter that provides a set of colors and fonts that you can 
+use to style your app.
+
+MediaQuery: MediaQuery is a widget in Flutter that provides information about the device's size and 
+orientation. It can be used to create responsive UIs that adapt to different devices.
+
+Navigator: Navigator is a widget in Flutter that manages the navigation stack. You can use it to navigate 
+between screens and manage the back button.
+
+Importance of widgets - theres a widget for everything , and everything is a widget
+
+In Flutter, widgets are the building blocks of the user interface (UI) of an application. They can be 
+simple like a text label or complex like a scrolling list of items. In Flutter, everything that you see 
+on the screen is a widget, from buttons and text to images and sliders. Widgets are the core of how you 
+build the UI of your application.
+
+Flutter comes with a wide range of pre-built widgets, such as text, buttons, and icons, but you can also 
+create your own custom widgets to match the needs of your application. The pre-built widgets are highly 
+customizable, allowing you to tweak everything from the color and font to the layout and alignment.
+
+The key concept of widgets in Flutter is that they are reactive, meaning they rebuild themselves 
+automatically whenever their internal state changes. For example, if the user taps on a button, the 
+widget representing that button will rebuild itself to reflect the new state of being pressed.
+
+Widgets can be arranged in a tree structure, where the parent widget can contain one or more child widgets. 
+This is called the widget tree, and it is how you build complex UIs in Flutter. Each widget has a build() 
+method that returns a description of how that widget should be rendered on the screen, based on its current
+state.
+
+Overall, the importance of widgets in Flutter cannot be overstated. They are the foundation of the entire 
+UI framework and allow you to create highly-customizable, responsive, and dynamic user interfaces with ease.
