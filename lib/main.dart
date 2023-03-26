@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
 
 main() {
-  runApp(app);
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+    );
+  }
 }
 
 /*
@@ -39,6 +54,14 @@ main() {
   usually used to create it. These widgets provide important parameters that allow you to customize the 
   app's appearance, behavior, and navigation.
 
+  Stateless widgets are immutable, meaning their properties can't be changed once they are constructed. 
+  They are useful for displaying static content, such as text or images, or for creating simple user 
+  interfaces.
+
+  Stateful widgets, on the other hand, are mutable and can change their properties over time. They are 
+  useful for creating more complex user interfaces, such as forms or animations, where the UI needs to 
+  respond to user input or other events.
+  
 */
 
 
