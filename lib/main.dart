@@ -1,26 +1,7 @@
 import 'package:flutter/material.dart';
 
-main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-    );
-  }
-}
-
 /*
-  The above is a basic Dart code for starting a Flutter application.
+  The below is a basic Dart code for starting a Flutter application.
 
   The main() function is the entry point for the Dart program. It is the first function that gets executed 
   when a Dart application starts running.
@@ -64,4 +45,73 @@ class MyApp extends StatelessWidget {
   
 */
 
+main() {
+  runApp(MyApp());
+}
+
+//the following is the root class(similar to head in HTML and includes metadata for the app)
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My App',
+      theme: ThemeData(
+        primaryColor: Color.fromARGB(255, 10, 84, 234),
+      ),
+      home: Homescreen(), //here we specify our home screen class
+    );
+  }
+}
+
+/*
+  There are several widgets that can be used as a home screen in Flutter, depending on the design and 
+  functionality you want to achieve. Some of the commonly used widgets as a home screen are:
+
+    Scaffold: Scaffold is a basic material design layout structure widget that provides an app bar, a
+    bottom navigation bar, a floating action button, and a body area. You can use this widget to create 
+    a basic home screen layout.
+
+    Container: Container is a widget that allows you to create a custom layout by specifying its child 
+    widget and decoration properties like padding, margin, background color, border, etc. You can use this
+    widget to create a simple and custom home screen.
+
+    Column: Column is a widget that arranges its child widgets in a vertical line. You can use this widget 
+    to create a home screen layout with multiple widgets stacked vertically.
+
+    ListView: ListView is a widget that allows you to create a scrollable list of child widgets. You can 
+    use this widget to create a home screen with a list of items that can be scrolled up and down.
+
+    GridView: GridView is a widget that allows you to create a scrollable grid of child widgets. You can use
+    this widget to create a home screen with a grid of items that can be scrolled in both directions.
+
+  These are just a few examples of the widgets that can be used as a home screen in Flutter. Ultimately, 
+  the best widget to use depends on the design and functionality requirements of your app.
+*/
+
+// Homescreen
+class Homescreen extends StatelessWidget {
+  const Homescreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('My Screen'),
+      ),
+      body: Center(
+        child: Text('This is my screen!'),
+      ),
+    );
+  }
+}
+
+
+// In this example, we have defined a Homescreen class that extends the StatelessWidget class. This class 
+// represents the homescreen in our app and contains all the UI elements and logic for that screen.
+
+// We have also defined a build method that returns a Scaffold widget with an AppBar and a Center widget 
+// that displays some text. Finally, we have imported this class into our main file(by calling 
+// home:Homescreen() and used it to create and display the screen:
 
