@@ -161,3 +161,20 @@ state.
 
 Overall, the importance of widgets in Flutter cannot be overstated. They are the foundation of the entire 
 UI framework and allow you to create highly-customizable, responsive, and dynamic user interfaces with ease.
+
+
+You can find detailed documentation for each widget in the Flutter API documentation.
+
+Here is how you can access the documentation for a specific widget:
+
+    Go to the Flutter API documentation website: https://api.flutter.dev/
+
+    In the search bar at the top of the page, type in the name of the widget you want to learn about. 
+    For example, if you want to learn about the Text widget, type in "Text" and hit enter.
+
+    This will take you to the page for the Text widget, where you can see a brief description of the widget 
+    and a list of all its properties and methods. You can click on each property or method to learn more 
+    about what it does and how to use it.
+
+In addition to the official documentation, there are also many tutorials, videos, and blog posts available 
+online that can help you learn more about Flutter widgets and how to use them effectively.
