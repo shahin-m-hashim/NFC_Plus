@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /*
   The below is a basic Dart code for starting a Flutter application.
@@ -97,16 +98,52 @@ class Homescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Screen'),
-      ),
-      body: Center(
-        child: Text('This is my screen!'),
-      ),
-    );
+        backgroundColor: Colors.blueAccent,
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                child: Container(
+                  color: Colors.yellow,
+                  child: Text('Cashless Payment System',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.oswald(
+                        color: Colors.red,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.green,
+                  child: Text('Cashless Payment System',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.oswald(
+                        color: Colors.red,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.teal,
+                  child: Text('Cashless Payment System',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.oswald(
+                        color: Colors.red,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
-
 
 // In this example, we have defined a Homescreen class that extends the StatelessWidget class. This class 
 // represents the homescreen in our app and contains all the UI elements and logic for that screen.
