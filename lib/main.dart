@@ -38,11 +38,13 @@ import 'package:google_fonts/google_fonts.dart';
 
   Stateless widgets are immutable, meaning their properties can't be changed once they are constructed. 
   They are useful for displaying static content, such as text or images, or for creating simple user 
-  interfaces.
+  interfaces. If theres no change in the state fo widget we use stateless. For eg: if we want to simply display
+  some data, we can use stateless.
 
   Stateful widgets, on the other hand, are mutable and can change their properties over time. They are 
   useful for creating more complex user interfaces, such as forms or animations, where the UI needs to 
-  respond to user input or other events.
+  respond to user input or other events. If theres change in the widget like color,data,animations,tick
+  mark etc we use stateful.
   
 */
 
