@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Screen2 extends StatelessWidget {
-  const Screen2({Key? key}) : super(key: key);
+class Screen3 extends StatelessWidget {
+  const Screen3({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class Screen2 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Second Screen',
+              'Third Screen',
               style: TextStyle(
                 color: Colors.deepPurple,
                 fontSize: 30,
@@ -26,11 +26,11 @@ class Screen2 extends StatelessWidget {
               width: 300,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(
-                      'screen_3'); //here we just call the name of the screen3
+                  // Navigator.of(context).pushNamed('screen_1');
+                  Navigator.of(context).pop(); //we mostly use pop to go back
                 },
                 child: const Text(
-                  'Go To Third Screen',
+                  'Go Back',
                 ),
               ),
             ),
