@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mastering_flutter/second_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,16 +19,17 @@ class HomeScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 50),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (ctx) => const Screen2(),
-                  ),
-                );
-              },
-              child: const Text('Go to Screen 2'),
+            const SizedBox(height: 150),
+            SizedBox(
+              height: 50,
+              width: 300,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                      'screen_2'); //here we just call the name of the screen
+                },
+                child: const Text('Go to Screen 2'),
+              ),
             ),
           ],
         ),
