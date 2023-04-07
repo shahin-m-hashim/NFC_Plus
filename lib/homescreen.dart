@@ -1,72 +1,58 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-/*
-  A bottom sheet is a popup that slides up from the bottom of the screen to display additional content or 
-  options for the user. It's commonly used to display contextual information, settings, or actions that 
-  are related to the current screen.
+import 'account.dart';
+import 'settings.dart';
 
-  In Flutter, you can use the showModalBottomSheet method to display a bottom sheet. This method takes a 
-  BuildContext and a builder function as arguments. The builder function returns a widget that is displayed 
-  within the bottom sheet.
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+/*
+  BottomNavigationBar is a widget in Flutter that displays a horizontal row of buttons at the bottom of the 
+  screen, typically used for navigation between different views or screens in an app.
+
+  It is typically used when the app has three to five main destinations. Each destination is represented by 
+  a single icon and label, and the selected destination is highlighted with a different color. When the user
+  taps on a destination, the app navigates to the corresponding screen.
+
+  The BottomNavigationBar widget takes a list of BottomNavigationBarItem objects as input. Each item contains 
+  an icon, a label, and an optional activeColor property to specify the color of the selected item.
 */
+
+  int _current_index = 0;
+  final _pages = [
+    Scaffold(
+      backgroundColor: Colors.amber,
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+      body: Center(
+        child: Text('This is the home screen'),
+      ),
+    ), // dummy home screen
+    const Account(),
+    const Settings(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Incrementer"),
-      ),
-      backgroundColor: Colors.amber,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Container(
-            alignment: AlignmentDirectional.topCenter,
-            child: FloatingActionButton(
-              onPressed: () {
-                showBottomSheet(context);
-              },
-              tooltip: 'Increment',
-              child: const Icon(Icons.add),
-            ),
-          ),
-        ),
+      body: _pages[_current_index],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _current_index,
+        onTap: (newIndex) {
+          setState(() {
+            _current_index = newIndex;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Person'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings')
+        ],
       ),
     );
-  }
-
-  Future<void> showBottomSheet(BuildContext ctx) async {
-    showModalBottomSheet(
-        context: ctx,
-        builder: (ctx1) {
-          return Container(
-            width: double.infinity,
-            height: 300,
-            color: Colors.deepPurple[600],
-            child: TextButton(
-              onPressed: () {},
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.blue),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(ctx1).pop();
-                  },
-                  child: const Text(
-                    "Close",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-        });
   }
 }
