@@ -2,39 +2,14 @@ import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
 /*
-  ValueNotifier is a simple class provided by Flutter that can be used to hold a single value and notify 
-  any listeners whenever the value changes. It is a lightweight and efficient way to manage and propagate 
-  changes to a single value across the app.
+  A bottom sheet is a popup that slides up from the bottom of the screen to display additional content or 
+  options for the user. It's commonly used to display contextual information, settings, or actions that 
+  are related to the current screen.
 
-  The main advantages of using ValueNotifier over StatefulWidget are:
-
-    Simplicity: ValueNotifier is much simpler to use than StatefulWidget. It requires less code to set up 
-    and manage, and it is easier to understand what it does.
-
-    Performance: Since ValueNotifier is designed to handle only one value, it is much more efficient than 
-    StatefulWidget, which can hold multiple values and requires more resources to manage them.
-
-    Flexibility: ValueNotifier can be used in a variety of contexts and is not tied to the widget tree. It 
-    can be used to manage state in any part of the app, and it can be combined with other Flutter APIs to 
-    create powerful reactive UIs.
-
-    Predictability: ValueNotifier provides a clear and simple mechanism for handling changes to a single 
-    value. This makes it easier to reason about the app's behavior and easier to debug issues related to 
-    state management.
-
-    Overall, ValueNotifier is a powerful tool for managing state in Flutter apps, and it is a good 
-    alternative to StatefulWidget in many cases.
+  In Flutter, you can use the showModalBottomSheet method to display a bottom sheet. This method takes a 
+  BuildContext and a builder function as arguments. The builder function returns a widget that is displayed 
+  within the bottom sheet.
 */
-
-  ValueNotifier<int> _counter = ValueNotifier(0);
-
-  void _incrementCounter() {
-    _counter.value++;
-  }
-
-  void _decrementCounter() {
-    _counter.value--;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,39 +19,54 @@ class HomeScreen extends StatelessWidget {
       ),
       backgroundColor: Colors.amber,
       body: SafeArea(
-        child: Center(
-          child: ValueListenableBuilder(
-            valueListenable: _counter,
-            builder: (BuildContext context, int new_value, Widget? child) {
-              return Text(
-                "Count $new_value",
-                style: const TextStyle(
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold,
-                ),
-              );
-            },
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Container(
+            alignment: AlignmentDirectional.topCenter,
+            child: FloatingActionButton(
+              onPressed: () {
+                showBottomSheet(context);
+              },
+              tooltip: 'Increment',
+              child: const Icon(Icons.add),
+            ),
           ),
         ),
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SizedBox(
-            width: 150,
-            child: FloatingActionButton(
-              onPressed: _decrementCounter,
-              tooltip: 'Decrement',
-              child: const Icon(Icons.remove),
-            ),
-          ),
-          FloatingActionButton(
-            onPressed: _incrementCounter,
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          ),
-        ],
-      ),
     );
+  }
+
+  Future<void> showBottomSheet(BuildContext ctx) async {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (ctx1) {
+          return Container(
+            width: double.infinity,
+            height: 300,
+            color: Colors.deepPurple[600],
+            child: TextButton(
+              onPressed: () {},
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blue),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(ctx1).pop();
+                  },
+                  child: const Text(
+                    "Close",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        });
   }
 }
