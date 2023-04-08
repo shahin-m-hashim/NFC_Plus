@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Text('This is the home screen'),
       ),
     ), // dummy home screen
-    const Account(),
+    Account(),
     const Settings(),
   ];
 
