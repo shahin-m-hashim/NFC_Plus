@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-import 'homescreen.dart';
+import 'screens/home_screen.dart';
 
-void main() {
-  runApp(
-    const MyApp(),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // await Hive.initFlutter(); //intialize Hive
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Extra Features",
+      title: "Local Database",
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
