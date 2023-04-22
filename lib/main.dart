@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
 
-import 'database/model/todo_model.dart';
 import 'screens/home_screen.dart';
+import 'sql_functions/db_functions.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter(); //initialize Hive
-  if (!Hive.isAdapterRegistered(TodoModelAdapter().typeId)) {
-    Hive.registerAdapter(TodoModelAdapter());
-  }
-  // the if statement will only execute Hive.registerAdapter(TodoModelAdapter()); if the adapter
-  // is not registered (!Hive.isAdapterRegistered(TodoModelAdapter().typeId) is true.
+  await OpenDB();
+  await get_all_todo_from_db();
   runApp(const MyApp());
 }
 
