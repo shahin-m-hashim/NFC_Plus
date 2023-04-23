@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 import '../SQL_functions/db_helper.dart';
 import '../models/todo.dart';
 
-class AddTodoScreen extends StatefulWidget {
-  @override
-  _AddTodoScreenState createState() => _AddTodoScreenState();
-}
-
-class _AddTodoScreenState extends State<AddTodoScreen> {
+class AddTodoScreen extends StatelessWidget {
   final TextEditingController _textEditingController = TextEditingController();
 
   @override
@@ -36,6 +31,12 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
                 final Todo newTodo = Todo(name: _textEditingController.text);
                 await TodoHelper.insert(newTodo);
                 _textEditingController.clear();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text('Todo added successfully.'),
+                    duration: const Duration(seconds: 1),
+                  ),
+                );
               },
             ),
           ],

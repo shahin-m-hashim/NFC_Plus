@@ -1,32 +1,16 @@
 import 'package:flutter/material.dart';
 
-class EditTodoPopup extends StatefulWidget {
-  final String currentName;
+class EditTodoPopup extends StatelessWidget {
+  final ValueNotifier<String> currentName;
   final Function(String) onSave;
 
   EditTodoPopup({required this.currentName, required this.onSave});
 
   @override
-  _EditTodoPopupState createState() => _EditTodoPopupState();
-}
-
-class _EditTodoPopupState extends State<EditTodoPopup> {
-  late TextEditingController _textEditingController;
-
-  @override
-  void initState() {
-    super.initState();
-    _textEditingController = TextEditingController(text: widget.currentName);
-  }
-
-  @override
-  void dispose() {
-    _textEditingController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    TextEditingController _textEditingController =
+        TextEditingController(text: currentName.value);
+
     return AlertDialog(
       title: Text('Edit Todo'),
       content: TextField(
@@ -34,6 +18,7 @@ class _EditTodoPopupState extends State<EditTodoPopup> {
         decoration: InputDecoration(
           hintText: 'Enter new name for todo',
         ),
+        onChanged: (value) => currentName.value = value,
       ),
       actions: <Widget>[
         TextButton(
@@ -43,9 +28,9 @@ class _EditTodoPopupState extends State<EditTodoPopup> {
         ElevatedButton(
           child: Text('Save'),
           onPressed: () {
-            widget.onSave(_textEditingController.text);
+            onSave(currentName.value);
             print(
-                'Todo updated successfully with new title: ${_textEditingController.text}');
+                'Todo updated successfully with new title: ${currentName.value}');
             Navigator.of(context).pop();
           },
         ),
