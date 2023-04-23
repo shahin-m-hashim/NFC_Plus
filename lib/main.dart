@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'screens/home_screen.dart';
-import 'sql_functions/db_functions.dart';
+import 'screens/addtodoscreen.dart';
+import 'screens/homescreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await OpenDB();
-  await get_all_todo_from_db();
   runApp(const MyApp());
 }
 
@@ -16,11 +14,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Local Database Hive",
+      title: "Local Database SQL",
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      home: const HomeScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomeScreen(),
+        '/add_todo': (context) => AddTodoScreen(),
+      },
     );
   }
 }
