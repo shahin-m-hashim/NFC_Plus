@@ -12,25 +12,23 @@ class EditTodoPopup extends StatelessWidget {
         TextEditingController(text: currentName.value);
 
     return AlertDialog(
-      title: Text('Edit Todo'),
+      title: const Text('Edit Todo'),
       content: TextField(
         controller: _textEditingController,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           hintText: 'Enter new name for todo',
         ),
         onChanged: (value) => currentName.value = value,
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
           onPressed: () => Navigator.of(context).pop(),
         ),
         ElevatedButton(
-          child: Text('Save'),
+          child: const Text('Save'),
           onPressed: () {
-            onSave(currentName.value);
-            print(
-                'Todo updated successfully with new title: ${currentName.value}');
+            onSave(_textEditingController.text);
             Navigator.of(context).pop();
           },
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../SQL_functions/db_helper.dart';
+import '../Firestore_fns/db_helper.dart';
 import '../models/todo.dart';
 
 class AddTodoScreen extends StatelessWidget {
@@ -24,7 +24,7 @@ class AddTodoScreen extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               child: const Text('Add Todo'),
               onPressed: () async {
@@ -32,9 +32,9 @@ class AddTodoScreen extends StatelessWidget {
                 await TodoHelper.insert(newTodo);
                 _textEditingController.clear();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: const Text('Todo added successfully.'),
-                    duration: const Duration(seconds: 1),
+                  const SnackBar(
+                    content: Text('Todo added successfully.'),
+                    duration: Duration(seconds: 1),
                   ),
                 );
               },

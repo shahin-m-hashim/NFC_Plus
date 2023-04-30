@@ -1,23 +1,53 @@
 class Todo {
-  int? id;
   String name;
-  bool isCompleted;
 
   Todo({
-    this.id,
     required this.name,
-    this.isCompleted = false,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
-      'isCompleted': isCompleted ? 1 : 0,
+      'Name': name,
     };
   }
 
-  /*
+  static Todo fromMap(Map<String, dynamic> map) {
+    return Todo(
+      name: map['Name'],
+    );
+  }
+
+  // The purpose of this function is to convert a Map object that represents a Todo item in the database
+  // back to a Todo object that can be used in the app code. This is useful, for example, when retrieving
+  // data from the database and displaying it in the app.
+}
+
+/*
+
+  Firestore does allow you to work with data using native data types such as maps and objects, as you 
+  mentioned. This means that you can store and retrieve data using objects that are already in the correct 
+  format, and you don't have to worry about serializing and deserializing them manually.
+
+  However, when you use a custom data model like the Todo class in the example I provided, you still need 
+  to perform some conversion between the native data types and your custom data model. For example, you 
+  need to convert a Todo object into a map before you can store it in Firestore, and you need to convert
+  a Firestore document into a Todo object before you can work with it in your Flutter code.
+
+  In Firebase Cloud Firestore, data is stored in a NoSQL document-oriented database, which means that the 
+  data is stored as documents and collections. Each document can contain multiple fields, and each field 
+  can contain a variety of data types, including strings, numbers, and even nested objects.
+
+  When you store data in Firestore, you don't need to manually convert your data into maps or key-value 
+  pairs. Instead, you can directly store your data as a map, which represents a single document in a 
+  collection.
+
+  Similarly, when you retrieve data from Firestore, it is returned as a map, which you can then convert 
+  back into your desired data format. Firestore also supports querying the data based on various conditions,
+  such as equality, range, and even geographic location.
+
+*/
+
+/*
 
     toMap() is used to convert a Todo object to a Map<String, dynamic>. This method creates a new Map object 
     with keys and values representing the id, name, and isCompleted properties of the Todo object. The 
@@ -27,124 +57,125 @@ class Todo {
 
   */
 
-  static Todo fromMap(Map<String, dynamic> map) {
-    return Todo(
-      id: map['id'],
-      name: map['name'],
-      isCompleted: map['isCompleted'] == 1,
-    );
-  }
+/*
 
-  /*
-
-    fromMap() is used to create a Todo object from a Map<String, dynamic>. This method takes in a Map as 
-    an argument and uses its values to create a new Todo object. The id and name properties are set 
-    directly from the Map, while the isCompleted property is set based on the value of the isCompleted 
-    key in the Map. If the value is 1, isCompleted is set to true, and if the value is 0, isCompleted 
-    is set to false. The resulting Todo object can then be used in the application.
+    toJson() method converts the Todo object to a Map<String, dynamic> by directly returning a Map object 
+    with keys and values representing the id, name, and isCompleted properties of the Todo object. 
+    The resulting Map can then be used to store the Todo object in Firestore.
 
   */
-}
-
 
 /*
 
-THE IMPORTANT CONVERSIONS TO USE WHEN USING SQL DATABASE IN FLUTTER
+THE IMPORTANT CONVERSIONS TO USE WHEN USING FIRESTORE DATABASE IN FLUTTER
 
-Sure, here are some examples of how to convert various data types to a map and vice versa:
+To convert various data types to JSON and vice versa, you can use the dart:
+convert library which provides two classes: JsonEncoder and JsonDecoder.
+
+Here are some examples of how to convert various data types to JSON and vice versa:
+
+make sure to - import 'dart:convert';
 
 String:
 
-To Map:
+To Json:
 
   final String myString = 'Hello World';
-  final Map<String, dynamic> myStringMap = {'string': myString};
+  final String myStringJson = jsonEncode(myString);
 
-From Map:
+From Json:
 
-  final Map<String, dynamic> myStringMap = {'string': 'Hello World'};
-  final String myString = myStringMap['string'];
+  final String myStringJson = '"Hello World"';
+  final String myString = jsonDecode(myStringJson);
 
 Integer:
 
-To Map:
+To Json:
 
   final int myInt = 42;
-  final Map<String, dynamic> myIntMap = {'int': myInt};
+  final String myIntJson = jsonEncode(myInt);
 
-From Map:
+From Json:
 
-  final Map<String, dynamic> myIntMap = {'int': 42};
-  final int myInt = myIntMap['int'];
+  final String myIntJson = '42';
+  final int myInt = jsonDecode(myIntJson);
 
 Double:
 
-To Map:
+To Json:
 
   final double myDouble = 3.14;
-  final Map<String, dynamic> myDoubleMap = {'double': myDouble};
+  final String myDoubleJson = jsonEncode(myDouble);
 
-From Map:
+From Json:
 
-  final Map<String, dynamic> myDoubleMap = {'double': 3.14};
-  final double myDouble = myDoubleMap['double'];
+  final String myDoubleJson = '3.14';
+  final double myDouble = jsonDecode(myDoubleJson);
 
 List:
 
-To Map:
+To Json:
 
   final List<String> myList = ['apple', 'banana', 'orange'];
-  final Map<String, dynamic> myListMap = {'list': myList};
+  final String myListJson = jsonEncode(myList);
 
-From Map:
+From Json:
 
-  final Map<String, dynamic> myListMap = {'list': ['apple', 'banana', 'orange']};
-  final List<String> myList = List<String>.from(myListMap['list']);
+  final String myListJson = '["apple", "banana", "orange"]';
+  final List<String> myList = List<String>.from(jsonDecode(myListJson));
+
 
 Set:
 
-To Map:
+To Json:
 
   final Set<String> mySet = {'apple', 'banana', 'orange'};
-  final Map<String, dynamic> mySetMap = {'set': mySet.toList()};
+  final String mySetJson = jsonEncode(mySet.toList());
 
-From Map:
+From Json:
 
-  final Map<String, dynamic> mySetMap = {'set': ['apple', 'banana', 'orange']};
-  final Set<String> mySet = Set<String>.from(mySetMap['set']);
+  final String mySetJson = '["apple", "banana", "orange"]';
+  final Set<String> mySet = Set<String>.from(jsonDecode(mySetJson));
 
-Note that the above examples assume that the map keys are always strings. When using JSON, which is a 
-popular format for storing data, the keys may be of any type, but they are typically strings.
+Map:
+
+To Json:
+
+  final Map<String, dynamic> myMap = {'name': 'John Doe', 'age': 30};
+  final String jsonString = json.encode(myMap);
+
+From Json:
+
+  final String jsonString = '{"name": "John Doe", "age": 30}';
+  final Map<String, dynamic> myMap = json.decode(jsonString);
 
 */
 
 /*
 
-SQL is a database management system that stores data in tables with rows and columns. Each row represents 
-a single record, while each column represents a specific attribute or field of the record.
+Firestore is a cloud-based NoSQL document database that is part of the Firebase platform. It is designed 
+to provide real-time syncing and scalability for web, mobile, and IoT applications. Firestore stores data 
+in the form of collections and documents, which are similar to tables and rows in a traditional SQL 
+database. However, unlike SQL databases, Firestore is schemaless, which means you don't have to define 
+a fixed schema before you start storing data. This makes it easier to store and retrieve data of different 
+types and structures.
 
-When we retrieve data from an SQL database, it is typically returned as a set of rows. However, in order
-to use this data in a Flutter application, we often need to convert it to a different format, such as a 
-Map or a custom model class.
+Firestore uses a flexible data model that allows you to store data in nested objects and arrays. Each 
+document in a Firestore collection can contain multiple fields, which can be of different data types 
+such as strings, numbers, booleans, arrays, and even nested objects. Documents are identified by a unique 
+ID and can be easily queried and updated using Firestore APIs.
 
-The reason for this is that the data retrieved from an SQL database is typically represented as a list of 
-tuples, where each tuple represents a single row of the table. This format is not well-suited for use in 
-a Flutter application, where we typically work with structured data in the form of Maps or custom model 
-classes.
+Firestore also provides real-time updates, which means that any changes made to a document are automatically
+synced across all connected devices in real-time. This makes it ideal for building real-time applications 
+such as chat apps, collaborative editing tools, and social media platforms.
 
-Therefore, we need to convert the data retrieved from the SQL database to a format that is easier to work 
-with in Flutter. This is typically done by mapping the tuples to Maps or custom model classes that are more 
-appropriate for use in a Flutter application.
+In addition to its core database features, Firestore also offers integration with other Firebase services 
+such as Firebase Authentication, Cloud Functions, Cloud Messaging, and Hosting. This allows developers to 
+build end-to-end solutions without having to worry about backend infrastructure.
 
-Similarly, when we want to store data in an SQL database from a Flutter application, we typically need to 
-convert the data from its native format (e.g. a Map or custom model class) to a format that can be stored 
-in the SQL database (e.g. a set of tuples). This conversion is typically done using a mapping function that 
-maps the data from its native format to a format that can be stored in the SQL database.
-
-*/
-
-
-/*
+Overall, Firestore provides a powerful and flexible way to store and sync data for web, mobile, and IoT 
+applications. Its flexible data model, real-time updates, and seamless integration with other Firebase 
+services make it a popular choice among developers.
 
 You can use both a data model and a helper class to interact with your SQLite database. The data model 
 represents the structure of your data and provides methods to convert the data to and from a format that 
