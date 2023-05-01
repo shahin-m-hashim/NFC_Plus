@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class EditTodoPopup extends StatelessWidget {
+  final String id; // add the id parameter
   final ValueNotifier<String> currentName;
-  final Function(String) onSave;
+  final void Function(String newName, String id) onSave;
 
-  EditTodoPopup({required this.currentName, required this.onSave});
+  EditTodoPopup({
+    required this.id,
+    required this.currentName,
+    required this.onSave,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +33,8 @@ class EditTodoPopup extends StatelessWidget {
         ElevatedButton(
           child: const Text('Save'),
           onPressed: () {
-            onSave(_textEditingController.text);
+            onSave(id, _textEditingController.text);
+            // pass the id parameter here as well
             Navigator.of(context).pop();
           },
         ),

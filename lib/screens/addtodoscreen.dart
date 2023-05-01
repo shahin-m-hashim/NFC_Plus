@@ -29,7 +29,8 @@ class AddTodoScreen extends StatelessWidget {
               child: const Text('Add Todo'),
               onPressed: () async {
                 final Todo newTodo = Todo(name: _textEditingController.text);
-                await TodoHelper.insert(newTodo);
+                var id = await TodoHelper.insert(newTodo);
+                print('Inserted a new Todo with id $id');
                 _textEditingController.clear();
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

@@ -1,7 +1,9 @@
 class Todo {
-  String name;
+  final String name;
+  final String? id;
 
-  Todo({
+  const Todo({
+    this.id,
     required this.name,
   });
 
@@ -11,8 +13,9 @@ class Todo {
     };
   }
 
-  static Todo fromMap(Map<String, dynamic> map) {
+  factory Todo.fromMap(Map<String, dynamic> map) {
     return Todo(
+      id: map['id'], // Make sure that the key is 'id', not 'Id' or 'ID'
       name: map['Name'],
     );
   }

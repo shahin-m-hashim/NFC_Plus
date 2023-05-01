@@ -48,10 +48,12 @@ class HomeScreen extends StatelessWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return EditTodoPopup(
+                              id: todo.id!, // add the todo ID here
                               currentName: currentName,
-                              onSave: (String newName) async {
-                                await TodoHelper.updateTodoByName(
-                                    todo.name, newName);
+                              onSave: (String id, String newName) async {
+                                // add the ID parameter here
+                                await TodoHelper.updateTodoById(id,
+                                    newName); // pass the ID parameter here as well
                                 await _refreshTodoList();
                               },
                             );
@@ -62,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.delete),
                       onPressed: () async {
-                        await TodoHelper.deleteTodoByName(todo.name);
+                        await TodoHelper.deleteTodoById(todo.id!);
                         await _refreshTodoList();
                       },
                     ),

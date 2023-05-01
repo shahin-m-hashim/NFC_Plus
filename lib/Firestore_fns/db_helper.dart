@@ -6,10 +6,17 @@ class TodoHelper {
   static const String collection = 'Todos';
   static const String fieldName = 'Name';
 
-  //Initializing firestore database collection
-  static CollectionReference _getCollection() {
-    return FirebaseFirestore.instance.collection(collection);
-  }
+  // Initialize the Firestore database collection reference
+  static CollectionReference _getCollection() =>
+      FirebaseFirestore.instance.collection(collection);
+
+  // This returns a collection named Todos
+
+  // Create a reference to a specific document in the Todos collection
+  static DocumentReference getTodoDocumentById(String id) =>
+      _getCollection().doc(id);
+
+  // This returns a specific document by its id
 
   /*
     A CollectionReference represents a collection of documents, and a DocumentReference represents a 
@@ -31,9 +38,11 @@ class TodoHelper {
 
   */
 
-  static Future<DocumentReference> insert(Todo todo) async {
+  static Future<String> insert(Todo todo) async {
     final collection = _getCollection();
-    return collection.add(todo.toMap());
+    final docRef = await collection.add(todo.toMap());
+    await docRef.set({'id': docRef.id}, SetOptions(merge: true));
+    return docRef.id;
   }
 
   /*
@@ -55,25 +64,15 @@ class TodoHelper {
       which returns a map
   */
 
-  static Future<void> deleteTodoByName(String name) async {
-    final collection = _getCollection();
-    final doc = collection.where(fieldName, isEqualTo: name);
-    await doc.get().then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        doc.reference.delete();
-      });
-    });
+  static Future<void> deleteTodoById(String id) async {
+    print('Deleting todo with id: $id');
+    final doc = getTodoDocumentById(id);
+    await doc.delete();
   }
 
-  static Future<void> updateTodoByName(
-      String currentName, String newName) async {
-    final collection = _getCollection();
-    final doc = collection.where(fieldName, isEqualTo: currentName);
-    await doc.get().then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        doc.reference.update({fieldName: newName});
-      });
-    });
+  static Future<void> updateTodoById(String id, String newName) async {
+    final doc = getTodoDocumentById(id);
+    await doc.update({fieldName: newName});
   }
 
   static Future<List<Todo>> getTodos() async {
