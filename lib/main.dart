@@ -1,34 +1,40 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/addtodoscreen.dart';
+import 'auth/services/auth_services.dart';
 import 'screens/homescreen.dart';
+import 'screens/login_screen.dart';
+import 'screens/sign_up_screen.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // initialize Firebase
   await Firebase.initializeApp();
 
-  // Enable offline persistence
-  FirebaseFirestore.instance.settings = Settings(persistenceEnabled: true);
+  // Check Whether User Logged In Or Not
+  bool loggedIn = await AuthService().isLoggedIn();
 
-  runApp(MyApp());
+  runApp(MyApp(loggedIn: loggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool loggedIn;
+
+  const MyApp({Key? key, required this.loggedIn}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Local Database SQL",
+      title: "Firebase Authentication",
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      initialRoute: '/',
+      initialRoute: loggedIn ? 'home' : '/',
       routes: {
-        '/': (context) => HomeScreen(),
-        '/add_todo': (context) => AddTodoScreen(),
+        '/': (context) => LoginScreen(),
+        'home': (context) => HomeScreen(),
+        'sign_up': (context) => SignUpScreen(),
       },
     );
   }
