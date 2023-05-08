@@ -1,10 +1,10 @@
-class UserModel {
+class AdminModel {
   final String uid;
   final String name;
   final String email;
   final String phoneNumber;
 
-  UserModel({
+  AdminModel({
     required this.uid,
     required this.name,
     required this.email,

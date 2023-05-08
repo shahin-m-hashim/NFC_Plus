@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../helpers/core_functions.dart';
 
@@ -15,14 +15,16 @@ class _BalanceWidgetState extends State<BalanceWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 543,
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-            Color.fromARGB(255, 55, 53, 53),
-            Color(0x88211E1E),
-          ])),
+        gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 55, 53, 53),
+              Color(0x88211E1E),
+            ]),
+      ),
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
@@ -33,7 +35,7 @@ class _BalanceWidgetState extends State<BalanceWidget> {
             backgroundWidth: 100,
             radius: 130.0.r,
             animation: true,
-            animationDuration: 2000,
+            animationDuration: 2300,
             lineWidth: 20.0,
             percent: getProgressPercentage(),
             reverse: false,
@@ -43,12 +45,12 @@ class _BalanceWidgetState extends State<BalanceWidget> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 50.h,
+                  height: 40.h,
                 ),
                 Text(
-                  '₹ ${getCurrentDayIncome()}',
+                  '₹${getCurrentDayIncome()}',
                   style: TextStyle(
-                    fontSize: 35.sp,
+                    fontSize: 45.sp,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
@@ -59,17 +61,17 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                 Text(
                   'So Far This Day',
                   style: TextStyle(
-                    fontSize: 15.sp,
+                    fontSize: 16.sp,
                     color: Colors.white,
                   ),
                 ),
                 SizedBox(
-                  height: 18.h,
+                  height: 15.h,
                 ),
                 Text(
-                  '₹ ${getCurrentWeekIncome()}',
+                  '₹${getCurrentWeekIncome()}',
                   style: TextStyle(
-                    fontSize: 24.sp,
+                    fontSize: 27.sp,
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
@@ -80,23 +82,23 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                 Text(
                   'This Week',
                   style: TextStyle(
-                    fontSize: 13.sp,
+                    fontSize: 14.sp,
                     color: Colors.white,
                   ),
                 ),
                 SizedBox(
-                  height: 25.h,
+                  height: 23.h,
                 ),
                 Text(
                   '₹1000/Day',
                   style: TextStyle(
-                    fontSize: 15.sp,
+                    fontSize: 20.sp,
                     color: Colors.red,
                   ),
                 ),
               ],
             ),
-            circularStrokeCap: CircularStrokeCap.butt,
+            circularStrokeCap: CircularStrokeCap.square,
             backgroundColor: Colors.yellow,
             progressColor: Colors.orange,
           ),
@@ -111,13 +113,15 @@ class _BalanceWidgetState extends State<BalanceWidget> {
                 height: 50.h,
                 width: 300.w,
                 decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
                       Color(0xFF6673CE),
                       Color(0xFF16b3ed),
-                    ])),
+                    ],
+                  ),
+                ),
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(15.w, 10.h, 15.w, 10.h),
                   child: Center(

@@ -1,8 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
 import '../../../NFC/services/nfc_services.dart';
+import '../../pop_ups/nfc_scanning_popup.dart';
+import '../../pop_ups/nfc_tag_popups.dart';
 
 class AdminRead extends StatefulWidget {
   @override
@@ -13,21 +17,50 @@ class _AdminReadState extends State<AdminRead> {
   final ValueNotifier<List<Map<String, dynamic>>> userDataList =
       ValueNotifier<List<Map<String, dynamic>>>([]);
   bool isSearching = false;
+  bool extract = false;
 
   Future<void> _extractNfcData() async {
+    setState(() {
+      isSearching = true;
+    });
+
+    if (isSearching) {
+      NfcScanningPopup.NfcSearchingIndicator(context);
+    }
+
     try {
       final String userDataJson = await readNfcTag();
+
+      // print(userDataJson);
+
+      if (userDataJson == 'empty' || userDataJson == '{}') {
+        // Tag data is empty
+        setState(() {
+          isSearching = false;
+        });
+        Navigator.pop(context);
+        NFCPopups.NfcTagDataEmptyPopup(context);
+        return; // Exit the function
+      }
+
       final userData = jsonDecode(userDataJson);
       userDataList.value = [userData];
+      extract = true;
     } catch (e) {
-      print('Error reading NFC tag: $e');
+      setState(() {
+        isSearching = false;
+      });
+      Navigator.pop(context);
+      NFCPopups.NfcTagNotFoundPopup(context);
+      return; // Exit the function
     }
-  }
 
-  @override
-  void initState() {
-    super.initState();
-    _extractNfcData();
+    if (extract) {
+      setState(() {
+        isSearching = false;
+      });
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -38,11 +71,12 @@ class _AdminReadState extends State<AdminRead> {
         child: ValueListenableBuilder<List<Map<String, dynamic>>>(
           valueListenable: userDataList,
           builder: (context, userDataList, child) {
-            if (userDataList.isEmpty) {
+            if (userDataList.isEmpty || userDataList[0].isEmpty) {
               return const Text(
-                'Tap an NFC tag to read data',
+                'No Transactions Has Been Received Today, Scan Your Customer Tag.',
                 style: TextStyle(
-                  fontSize: 50,
+                  fontSize: 40,
+                  fontWeight: FontWeight.w500,
                   color: Colors.red,
                 ),
                 textAlign: TextAlign.center,
@@ -93,6 +127,23 @@ class _AdminReadState extends State<AdminRead> {
               );
             }
           },
+        ),
+      ),
+      floatingActionButton: ElevatedButton(
+        onPressed: _extractNfcData,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color.fromARGB(255, 201, 102, 206),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+        child: const Text(
+          'START Scanning',
+          style: TextStyle(
+            fontSize: 15,
+            color: Colors.white,
+          ),
         ),
       ),
     );

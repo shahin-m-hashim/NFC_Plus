@@ -36,12 +36,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   cloud_firestore: ^4.6.0
   nfc_manager: ^3.2.0
-  pandabar: ^0.1.2
-  easy_splash_screen: ^1.0.4
   percent_indicator: ^4.2.3
   intl: ^0.18.1
   flutter_screenutil: ^5.7.0
   flutter_feather_icons: ^2.0.0+1
+  email_validator: ^2.1.17
+  firebase_auth: ^4.2.2
+  shared_preferences: ^2.1.0
 
 dev_dependencies:
   flutter_test:

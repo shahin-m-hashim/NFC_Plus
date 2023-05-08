@@ -217,28 +217,6 @@ class _UserScreenState extends State<UserScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
-                SizedBox(
-                  width: 340,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      Navigator.pushNamed(context, 'user-read');
-                      // Do something with the data
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    child: const Text(
-                      'READ NFC',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  ),
-                ),
               ],
             ),
           ],

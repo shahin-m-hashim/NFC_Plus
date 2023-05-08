@@ -21,7 +21,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black87,
         title: Padding(
-          padding: const EdgeInsets.only(left: 100),
+          padding: const EdgeInsets.only(left: 50),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -71,7 +71,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.nfc_rounded),
-            label: 'Read NFC',
+            label: 'NFC',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings_sharp),

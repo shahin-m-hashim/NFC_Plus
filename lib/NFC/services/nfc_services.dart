@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:nfc_manager/nfc_manager.dart';
@@ -36,9 +37,7 @@ Future<bool> writeNfcTagIfAvailable(String data) async {
       await NfcManager.instance.stopSession();
       completer.complete(true);
     });
-  } on PlatformException catch (ex) {
-    // Handle NFC exceptions
-    print(ex.toString());
+  } on PlatformException {
     completer.complete(false);
   } catch (e) {
     completer.complete(false);
@@ -47,38 +46,44 @@ Future<bool> writeNfcTagIfAvailable(String data) async {
   return result;
 }
 
-// READ DATA IF NFC FOUND
+// READ AND ERASE THE DATA IF NFC FOUND
 
 Future<String> readNfcTag() async {
   String data = '';
-  Completer<bool> completer = Completer<bool>();
+  Completer<String> completer = Completer<String>();
 
   Future.delayed(const Duration(seconds: 15), () {
     if (!completer.isCompleted) {
-      completer.complete(false);
+      completer.complete('');
     }
   });
 
   try {
     await NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-      final ndef = Ndef.from(tag);
-      if (ndef == null) return;
-      final records = ndef.cachedMessage?.records ?? [];
-      for (final record in records) {
-        data = String.fromCharCodes(record.payload.sublist(3));
-        break;
+      try {
+        final ndef = Ndef.from(tag);
+        if (ndef == null) return;
+        final records = ndef.cachedMessage?.records ?? [];
+        for (final record in records) {
+          data = String.fromCharCodes(record.payload.sublist(3));
+          break;
+        }
+        final emptyJson = jsonEncode({});
+        final emptyRecord = NdefRecord.createText(emptyJson);
+        final emptyMessage = NdefMessage([emptyRecord]);
+        await ndef.write(emptyMessage);
+        await NfcManager.instance.stopSession();
+        completer.complete(data);
+      } catch (e) {
+        completer.complete('empty');
       }
-      await NfcManager.instance.stopSession();
-      completer.complete(true);
     });
   } on PlatformException catch (ex) {
     // Handle NFC exceptions
-    print(ex.toString());
-    completer.complete(false);
+    completer.complete('');
   } catch (e) {
-    completer.complete(false);
-    data = '';
+    completer.complete('');
   }
-  await completer.future;
-  return data;
+
+  return completer.future;
 }

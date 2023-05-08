@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../authentication/services/auth_services.dart';
+
 class AdminAccountSettingsScreen extends StatelessWidget {
   const AdminAccountSettingsScreen({super.key});
 
@@ -35,8 +37,11 @@ class AdminAccountSettingsScreen extends StatelessWidget {
           ListTile(
             title: const Text('Logout'),
             trailing: const Icon(Icons.exit_to_app),
-            onTap: () {
-              // Replace with your logic to handle logout functionality
+            onTap: () async {
+              final AuthService _authService = AuthService();
+              await _authService.signOut();
+              Navigator.pushNamedAndRemoveUntil(
+                  context, 'home', (route) => false);
             },
           ),
         ],

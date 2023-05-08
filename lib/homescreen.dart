@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mastering_flutter/screens/pop_ups/nfc_availabilty_popup.dart';
 
 import 'NFC/services/nfc_services.dart';
+import 'authentication/services/auth_services.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,11 +13,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool IsNfcAvailable = false;
+  late Future<bool> _isLoggedInFuture;
 
   @override
   void initState() {
     super.initState();
     _showNfcAvailabilityPopup();
+    _isLoggedInFuture = AuthService().isLoggedIn();
   }
 
   Future<void> checkNfcAvailability() async {
@@ -42,55 +45,74 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('NFC pay'),
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/images/login.png'), fit: BoxFit.cover),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 300,
-              height: 100,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'admin-login');
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.red), // Set the background color
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.only(left: 30, top: 100, right: 30),
+          child: Column(
+            children: [
+              SizedBox(
+                width: 100, // Adjust the desired width
+                height: 100, // Adjust the desired height
+                child: Image.asset(
+                  'assets/images/newlogo.png',
                 ),
-                child: const Text(
-                  'ADMIN',
-                  style: TextStyle(
-                    fontSize: 50,
+              ),
+              const SizedBox(height: 200),
+              SizedBox(
+                width: 300,
+                height: 100,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _isLoggedInFuture.then((loggedIn) {
+                      if (loggedIn) {
+                        Navigator.pushNamed(context, 'admin-home');
+                      } else {
+                        Navigator.pushNamed(context, 'admin-login');
+                      }
+                    });
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.red), // Set the background color
+                  ),
+                  child: const Text(
+                    'ADMIN',
+                    style: TextStyle(
+                      fontSize: 50,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: 300,
-              height: 100,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'user');
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.green), // Set the background color
-                ),
-                child: const Text(
-                  'USER',
-                  style: TextStyle(
-                    fontSize: 50,
-                    letterSpacing: 5,
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 300,
+                height: 100,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'user');
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.green), // Set the background color
+                  ),
+                  child: const Text(
+                    'USER',
+                    style: TextStyle(
+                      fontSize: 50,
+                      letterSpacing: 5,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
