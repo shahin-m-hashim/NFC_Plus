@@ -20,7 +20,7 @@ Future<bool> isNfcAvailable() async {
 Future<bool> writeNfcTagIfAvailable(String data) async {
   Completer<bool> completer = Completer<bool>();
 
-  Future.delayed(const Duration(seconds: 15), () {
+  Future.delayed(const Duration(seconds: 5), () {
     if (!completer.isCompleted) {
       completer.complete(false);
     }
@@ -52,7 +52,7 @@ Future<String> readNfcTag() async {
   String data = '';
   Completer<String> completer = Completer<String>();
 
-  Future.delayed(const Duration(seconds: 15), () {
+  Future.delayed(const Duration(seconds: 5), () {
     if (!completer.isCompleted) {
       completer.complete('');
     }

@@ -12,10 +12,20 @@ class BalanceWidget extends StatefulWidget {
 }
 
 class _BalanceWidgetState extends State<BalanceWidget> {
+  Future<int> getTodaysIncome() async {
+    final currentDayIncome = await getCurrentDayIncome(DateTime.now());
+    return currentDayIncome;
+  }
+
+  Future<int> getWeeksIncome() async {
+    final currentWeekIncome = await getCurrentWeekIncome(DateTime.now());
+    return currentWeekIncome;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 543,
+      height: 540,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -29,78 +39,119 @@ class _BalanceWidgetState extends State<BalanceWidget> {
       child: Column(
         children: [
           SizedBox(
-            height: 25.h,
+            height: 30.h,
           ),
-          CircularPercentIndicator(
-            backgroundWidth: 100,
-            radius: 130.0.r,
-            animation: true,
-            animationDuration: 2300,
-            lineWidth: 20.0,
-            percent: getProgressPercentage(),
-            reverse: false,
-            arcBackgroundColor: const Color(0xFF14bae3),
-            arcType: ArcType.FULL,
-            center: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 40.h,
-                ),
-                Text(
-                  '₹${getCurrentDayIncome()}',
-                  style: TextStyle(
-                    fontSize: 45.sp,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                Text(
-                  'So Far This Day',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                Text(
-                  '₹${getCurrentWeekIncome()}',
-                  style: TextStyle(
-                    fontSize: 27.sp,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                Text(
-                  'This Week',
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(
-                  height: 23.h,
-                ),
-                Text(
-                  '₹1000/Day',
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    color: Colors.red,
-                  ),
-                ),
-              ],
-            ),
-            circularStrokeCap: CircularStrokeCap.square,
-            backgroundColor: Colors.yellow,
-            progressColor: Colors.orange,
+          FutureBuilder<int>(
+            future: getTodaysIncome(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                final todaysIncome = snapshot.data!;
+                return FutureBuilder<double>(
+                  future: getProgressPercentage(todaysIncome.toDouble()),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    } else {
+                      final progress = snapshot.data!;
+                      return CircularPercentIndicator(
+                        backgroundWidth: 100,
+                        radius: 135.0.r,
+                        animation: true,
+                        animationDuration: 1500,
+                        lineWidth: 20.0,
+                        percent: progress,
+                        reverse: false,
+                        arcBackgroundColor: const Color(0xFF14bae3),
+                        arcType: ArcType.FULL,
+                        center: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 40.h,
+                            ),
+                            Text(
+                              '₹${todaysIncome.toString()}',
+                              style: TextStyle(
+                                fontSize: 45.sp,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            Text(
+                              'So Far This Day',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            FutureBuilder<int>(
+                              future: getWeeksIncome(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const CircularProgressIndicator();
+                                } else if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                } else {
+                                  final weeksIncome = snapshot.data!;
+                                  return Column(
+                                    children: [
+                                      Text(
+                                        '₹${weeksIncome.toString()}',
+                                        style: TextStyle(
+                                          fontSize: 27.sp,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 5.h,
+                                      ),
+                                      Text(
+                                        'This Week',
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 23.h,
+                                      ),
+                                      Text(
+                                        '₹5000/Day',
+                                        style: TextStyle(
+                                          fontSize: 20.sp,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                        circularStrokeCap: CircularStrokeCap.square,
+                        backgroundColor: Colors.yellow,
+                        progressColor: Colors.orange,
+                      );
+                    }
+                  },
+                );
+              }
+            },
           ),
           SizedBox(
             height: 20.h,

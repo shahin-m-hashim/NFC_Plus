@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../database/db_helper.dart';
-import '../models/user_model.dart';
+import '../database/admin_db_helper.dart';
+import '../models/admin_model.dart';
 
 class AuthService {
   final DBHelper _dbHelper = DBHelper();

@@ -3,7 +3,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
+import '../../../NFC/database/transaction_db_helper.dart';
+import '../../../NFC/models/user_transaction_model.dart';
 import '../../../NFC/services/nfc_services.dart';
 import '../../pop_ups/nfc_scanning_popup.dart';
 import '../../pop_ups/nfc_tag_popups.dart';
@@ -19,6 +22,39 @@ class _AdminReadState extends State<AdminRead> {
   bool isSearching = false;
   bool extract = false;
 
+  String convertToFullDate(String smallDate) {
+    final DateFormat smallDateFormat = DateFormat('M/d/yy');
+    final DateFormat fullDateFormat = DateFormat('MMMM dd yyyy');
+
+    final DateTime parsedDate = smallDateFormat.parse(smallDate);
+    final String fullDate = fullDateFormat.format(parsedDate);
+
+    return fullDate;
+  }
+
+  Future<void> _storeUserDataInDatabase(Map<String, dynamic> userData) async {
+    try {
+      // Convert the small date format to full date format
+      final String fullDate = convertToFullDate(userData['day']);
+
+      // Create a UserTransactionModel object from the extracted data
+      final UserTransactionModel userTransactionModel = UserTransactionModel(
+        To: userData['to'],
+        Date: fullDate,
+        Time: userData['time'],
+        UPI_Transaction_Id: userData['ti'],
+        Amount_Paid: userData['amt'],
+      );
+
+      // Store the UserTransactionModel object in the Users collection
+      final String docId =
+          await UserTransactionDBHelper.insert(userTransactionModel);
+      print('User data stored in the database with document ID: $docId');
+    } catch (error) {
+      print('Failed to store user data: $error');
+    }
+  }
+
   Future<void> _extractNfcData() async {
     setState(() {
       isSearching = true;
@@ -30,8 +66,6 @@ class _AdminReadState extends State<AdminRead> {
 
     try {
       final String userDataJson = await readNfcTag();
-
-      // print(userDataJson);
 
       if (userDataJson == 'empty' || userDataJson == '{}') {
         // Tag data is empty
@@ -46,6 +80,9 @@ class _AdminReadState extends State<AdminRead> {
       final userData = jsonDecode(userDataJson);
       userDataList.value = [userData];
       extract = true;
+
+      // Store the user data in the database
+      await _storeUserDataInDatabase(userData);
     } catch (e) {
       setState(() {
         isSearching = false;
@@ -89,9 +126,12 @@ class _AdminReadState extends State<AdminRead> {
                 {'title': 'Time', 'value': userData['time']},
                 {
                   'title': 'UPI Transaction ID',
-                  'value': userData['uid'].toString()
+                  'value': userData['ti'].toString()
                 },
-                {'title': 'Google Transaction ID', 'value': userData['gid']},
+                {
+                  'title': 'Total Amount Paid',
+                  'value': userData['amt'].toString()
+                },
                 // add more items here as needed
               ];
               return ListView.separated(
@@ -100,20 +140,32 @@ class _AdminReadState extends State<AdminRead> {
                   final item = userDataItems[index];
                   return ListTile(
                     tileColor: Colors.amber,
-                    title: Text(
-                      item['title'],
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 8), // Add vertical spacing
+                        Text(
+                          item['title'],
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
-                    subtitle: Text(
-                      item['value'],
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 8), // Add vertical spacing
+                        Text(
+                          item['value'],
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
                     ),
                   );
                 },

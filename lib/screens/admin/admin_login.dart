@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../authentication/forget_pass.dart';
+import '../../authentication/services/forget_pass.dart';
 import '../../authentication/services/auth_services.dart';
 import '../../authentication/services/validation.dart';
 

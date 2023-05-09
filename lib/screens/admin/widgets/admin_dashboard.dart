@@ -55,55 +55,57 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
-          child: Column(
-            children: [
-              const SizedBox(height: 5),
-              ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0.r)),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.all(Radius.circular(5.0.r)),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(15.w, 15.h, 15.w, 15.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(
-                          FeatherIcons.clock,
-                          size: 25.0.r,
-                          color: Colors.white,
-                        ),
-                        SizedBox(width: 10.w),
-                        Text(
-                          '$formattedDate',
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w400,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
+            child: Column(
+              children: [
+                const SizedBox(height: 5),
+                ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(5.0.r)),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.all(Radius.circular(5.0.r)),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(15.w, 15.h, 15.w, 15.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(
+                            FeatherIcons.clock,
+                            size: 25.0.r,
                             color: Colors.white,
                           ),
-                        ),
-                        SizedBox(width: 10.w),
-                        Text(
-                          '$formattedTime',
-                          style: TextStyle(
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
+                          SizedBox(width: 10.w),
+                          Text(
+                            '$formattedDate',
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                            ),
                           ),
-                        )
-                      ],
+                          SizedBox(width: 10.w),
+                          Text(
+                            '$formattedTime',
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 5),
-              const BalanceWidget(),
-            ],
+                const SizedBox(height: 5),
+                const BalanceWidget(),
+              ],
+            ),
           ),
         ),
       ),

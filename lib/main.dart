@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'authentication/services/auth_services.dart';
 import 'homescreen.dart';
 import 'screens/admin/admin_home.dart';
 import 'screens/admin/admin_login.dart';
@@ -18,16 +17,11 @@ void main() async {
   // initialize Firebase
   await Firebase.initializeApp();
 
-  // Check Whether User Logged In Or Not
-  bool loggedIn = await AuthService().isLoggedIn();
-
-  runApp(MyApp(loggedIn: loggedIn));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final bool loggedIn;
-
-  const MyApp({required this.loggedIn, Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
