@@ -86,7 +86,7 @@ class _UserScreenState extends State<UserScreen> {
     userDataJson =
         '{"to": "$nm", "day": "$smallDate", "time": "$formattedTime", "ti": $ti, "amt": $amt}';
 
-    print(userDataJson.toString());
+    // print(userDataJson.toString());
 
     final userData = json.decode(userDataJson);
 
@@ -145,7 +145,7 @@ class _UserScreenState extends State<UserScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'To:',
+                              'From:',
                               style: TextStyle(
                                 fontSize: 23,
                                 fontWeight: FontWeight.w500,
@@ -222,7 +222,7 @@ class _UserScreenState extends State<UserScreen> {
                             ),
                             const SizedBox(height: 5),
                             Text(
-                              ' ₹${userData['amt'].toString()}',
+                              '₹${userData['amt'].toString()}',
                               style: TextStyle(
                                 fontSize: 23,
                                 color: Colors.grey[800],

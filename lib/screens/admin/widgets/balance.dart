@@ -157,7 +157,9 @@ class _BalanceWidgetState extends State<BalanceWidget> {
             height: 20.h,
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, 'transaction list');
+            },
             child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(30.0.r)),
               child: Container(
@@ -192,7 +194,9 @@ class _BalanceWidgetState extends State<BalanceWidget> {
             height: 10.h,
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, 'total earnings');
+            },
             child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(30.0.r)),
               child: Container(

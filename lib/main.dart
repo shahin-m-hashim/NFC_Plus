@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mastering_flutter/screens/admin/pages/notifications.dart';
+import 'package:mastering_flutter/screens/admin/pages/total_earnings.dart';
+import 'package:mastering_flutter/screens/admin/pages/transactions_list.dart';
 import 'homescreen.dart';
 import 'screens/admin/admin_home.dart';
 import 'screens/admin/admin_login.dart';
@@ -37,12 +40,18 @@ class MyApp extends StatelessWidget {
         'user': (context) => const UserScreen(),
         'admin-login': (context) => const AdminLogin(),
         'admin-signup': (context) => const AdminSignUp(),
-        'admin-home': (context) => AdminHomeScreen(),
-        'admin_read_nfc': (context) => AdminRead(),
+        'admin-home': (context) => const AdminHomeScreen(),
+        'admin_read_nfc': (context) => AdminRead(
+              updateNotificationState: (bool isActive) {},
+            ),
         'admin_account_settings': (context) =>
             const AdminAccountSettingsScreen(),
         'app_settings': (context) => AppSettingsScreen(),
         'about': (context) => AboutScreen(),
+        'notifications': (context) => const NotificationsScreen(),
+        'transaction list': (context) => TransactionList(),
+        'transaction details': (context) => const NotificationsScreen(),
+        'total earnings': (context) => TotalEarnings(),
       },
     );
   }

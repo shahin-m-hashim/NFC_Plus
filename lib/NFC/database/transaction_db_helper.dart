@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 import '../models/user_transaction_model.dart';
 
-class UserTransactionDBHelper {
+class TransactionDBHelper {
   static const String collection = 'User Transactions';
   static const String fieldName = 'To';
 
@@ -14,42 +15,76 @@ class UserTransactionDBHelper {
   static DocumentReference getUserDocumentById(String id) =>
       _getCollection().doc(id);
 
-  static Future<String> insert(UserTransactionModel userData) async {
-    final collection = _getCollection();
-    final docRef = await collection.add(userData.toJson());
-    await docRef.set({'Document Id': docRef.id}, SetOptions(merge: true));
-    return docRef.id;
-  }
-
-  static Future<List<UserTransactionModel>> getUsers() async {
-    final collection = _getCollection();
-    final QuerySnapshot snapshot = await collection.orderBy(fieldName).get();
-    final List<UserTransactionModel> users = [];
-    snapshot.docs.forEach((doc) {
-      final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      users.add(UserTransactionModel.fromJson(data));
-    });
-    return users;
-  }
-
-  static Future<int?> fetchAmountPaid(String transactionId) async {
+  static Future<bool> insert(UserTransactionModel userData) async {
     try {
-      final DocumentSnapshot snapshot = await FirebaseFirestore.instance
-          .collection('UserTransactions')
-          .doc(transactionId)
-          .get();
-      if (snapshot.exists) {
-        final Map<String, dynamic> data =
-            snapshot.data() as Map<String, dynamic>;
+      final collection = _getCollection();
+      final docRef = await collection.add(userData.toJson());
+      await docRef.set({'Document Id': docRef.id}, SetOptions(merge: true));
+      // print('User data stored in the database with document ID: ${docRef.id}');
+      return true;
+    } catch (error) {
+      // print('Failed to store user data: $error');
+      return false;
+    }
+  }
+
+  static Future<List<UserTransactionModel>> fetchUserTransactions() async {
+    try {
+      final collection =
+          FirebaseFirestore.instance.collection('User Transactions');
+      final QuerySnapshot snapshot = await collection.get();
+
+      List<UserTransactionModel> userTransactions = [];
+
+      snapshot.docs.forEach((doc) {
+        final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
         final UserTransactionModel transaction =
             UserTransactionModel.fromJson(data);
-        return transaction.Amount_Paid;
-      } else {
-        return null; // Document with the provided transactionId does not exist
-      }
+
+        userTransactions.add(transaction);
+      });
+
+      // print(userTransactions);
+
+      return userTransactions;
     } catch (error) {
-      print('Failed to fetch amount paid: $error');
-      return null;
+      // print('Error fetching user transactions: $error');
+      return [];
+    }
+  }
+
+  static Future<List<Map<String, dynamic>>> fetchTransactionIdAndDate() async {
+    try {
+      final collection =
+          FirebaseFirestore.instance.collection('User Transactions');
+      final QuerySnapshot snapshot = await collection.get();
+
+      List<Map<String, dynamic>> transactionDataList = [];
+
+      snapshot.docs.forEach((doc) {
+        final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        final UserTransactionModel transaction =
+            UserTransactionModel.fromJson(data);
+        final int transactionId = transaction.UPI_Transaction_Id;
+        final String transactionDateStr = data['Date'] as String;
+        final DateTime transactionDate =
+            DateFormat('MMMM dd yyyy').parse(transactionDateStr);
+        final String formattedDate =
+            DateFormat('MMM dd yyyy').format(transactionDate);
+        final transactionData = {
+          'transactionId': transactionId,
+          'transactionDate': formattedDate,
+        };
+
+        transactionDataList.add(transactionData);
+      });
+
+      // print('Fetched transaction data: $transactionDataList');
+
+      return transactionDataList;
+    } catch (error) {
+      // print('Error fetching transaction data: $error');
+      return [];
     }
   }
 }

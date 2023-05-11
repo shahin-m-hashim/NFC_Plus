@@ -7,12 +7,28 @@ import 'settings/settings.dart';
 import 'widgets/admin_dashboard.dart';
 
 class AdminHomeScreen extends StatefulWidget {
+  const AdminHomeScreen({Key? key});
+
   @override
   _AdminHomeScreenState createState() => _AdminHomeScreenState();
 }
 
 class _AdminHomeScreenState extends State<AdminHomeScreen> {
-  int _selectedIndex = 0; // Default index for "Home" page
+  int _selectedIndex = 0;
+  bool _isNotificationActive = false;
+
+  void updateNotificationState(bool isActive) {
+    setState(() {
+      _isNotificationActive = isActive;
+    });
+  }
+
+  void viewNotifications() async {
+    await Navigator.pushNamed(context, 'notifications');
+    setState(() {
+      _isNotificationActive = false; // Reset notification state
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +59,15 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(
-              FeatherIcons.bell,
+            icon: Icon(
+              _isNotificationActive
+                  ? Icons.notifications_active_sharp
+                  : FeatherIcons.bell,
               size: 25.0,
               color: Colors.white,
             ),
             onPressed: () {
-              // Add your onPressed functionality here
+              viewNotifications();
             },
           ),
         ],
@@ -88,7 +106,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
       case 0:
         return const AdminDashboardScreen();
       case 1:
-        return AdminRead();
+        return AdminRead(updateNotificationState: updateNotificationState);
       case 2:
         return const AdminSettingsScreen();
       default:

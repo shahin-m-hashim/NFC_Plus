@@ -17,6 +17,8 @@ class _RandomTransactionPopupState extends State<RandomTransactionPopup> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _tidController = TextEditingController();
 
+  bool _submitted = false;
+
   @override
   void initState() {
     super.initState();
@@ -32,12 +34,32 @@ class _RandomTransactionPopupState extends State<RandomTransactionPopup> {
   }
 
   void _onSubmitPressed(BuildContext context) {
-    String name = _nameController.text;
-    int amount = int.tryParse(_amountController.text) ?? 0;
-    int tid = int.tryParse(_tidController.text) ?? 0;
+    setState(() {
+      _submitted = true;
+    });
 
-    widget.onSubmit({'name': name, 'amount': amount, 'tid': tid});
-    Navigator.pop(context);
+    if (_validateFields()) {
+      String name = _nameController.text;
+      int amount = int.tryParse(_amountController.text) ?? 0;
+      int tid = int.tryParse(_tidController.text) ?? 0;
+
+      widget.onSubmit({'name': name, 'amount': amount, 'tid': tid});
+      Navigator.pop(context);
+    }
+  }
+
+  bool _validateFields() {
+    bool isValid = true;
+
+    if (_nameController.text.isEmpty || _nameController.text.length > 20) {
+      isValid = false;
+    }
+
+    if (_amountController.text.isEmpty) {
+      isValid = false;
+    }
+
+    return isValid;
   }
 
   @override
@@ -64,18 +86,26 @@ class _RandomTransactionPopupState extends State<RandomTransactionPopup> {
               const SizedBox(height: 23.0),
               TextField(
                 controller: _nameController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Name',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
+                  errorText: _submitted &&
+                          (_nameController.text.isEmpty ||
+                              _nameController.text.length > 20)
+                      ? 'Maximum of 20 characters only'
+                      : null,
                 ),
               ),
               const SizedBox(height: 16.0),
               TextField(
                 controller: _amountController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Amount',
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
+                  errorText: _submitted && _amountController.text.isEmpty
+                      ? 'Amount is required'
+                      : null,
                 ),
               ),
               const SizedBox(height: 16.0),

@@ -48,8 +48,8 @@ Future<int> getCurrentWeekIncome(DateTime date) async {
         .where('Date', isLessThanOrEqualTo: endFormattedDate)
         .get();
 
-    print("s $startFormattedDate");
-    print("e $endFormattedDate");
+    // print("s $startFormattedDate");
+    // print("e $endFormattedDate");
 
     snapshot.docs.forEach((doc) {
       final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
@@ -60,5 +60,63 @@ Future<int> getCurrentWeekIncome(DateTime date) async {
     return totalAmount;
   } catch (error) {
     return 0;
+  }
+}
+
+Future<int> getTotalIncome() async {
+  try {
+    final collection =
+        FirebaseFirestore.instance.collection('User Transactions');
+    final QuerySnapshot snapshot = await collection.get();
+    int totalAmount = 0;
+    snapshot.docs.forEach((doc) {
+      final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      final UserTransactionModel transaction =
+          UserTransactionModel.fromJson(data);
+      totalAmount += transaction.Amount_Paid;
+    });
+    print("Total: $totalAmount");
+    return totalAmount;
+  } catch (error) {
+    return 0;
+  }
+}
+
+Future<Map<String, dynamic>> getMonthlyIncome() async {
+  int monthlyIncome = 0;
+  DateTime currentDate = DateTime.now();
+  DateTime startOfMonth = DateTime(currentDate.year, currentDate.month, 1);
+  DateTime endOfMonth = DateTime(currentDate.year, currentDate.month + 1, 0);
+  try {
+    final DateFormat formatter = DateFormat('MMMM dd yyyy');
+    final String startFormattedDate = formatter.format(startOfMonth);
+    final String endFormattedDate = formatter.format(endOfMonth);
+
+    final collection =
+        FirebaseFirestore.instance.collection('User Transactions');
+    final QuerySnapshot snapshot = await collection
+        .where('Date', isGreaterThanOrEqualTo: startFormattedDate)
+        .where('Date', isLessThanOrEqualTo: endFormattedDate)
+        .get();
+
+    snapshot.docs.forEach((doc) {
+      final Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      final UserTransactionModel transaction =
+          UserTransactionModel.fromJson(data);
+      monthlyIncome += transaction.Amount_Paid;
+    });
+
+    final String monthName = DateFormat('MMMM').format(currentDate);
+    final Map<String, dynamic> result = {
+      'month': monthName,
+      'income': monthlyIncome,
+    };
+    print("Monthly Income ${result['month']}: ${result['income']}");
+    return result;
+  } catch (error) {
+    return {
+      'month': '',
+      'income': 0,
+    };
   }
 }

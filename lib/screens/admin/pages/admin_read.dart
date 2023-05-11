@@ -12,6 +12,10 @@ import '../../pop_ups/nfc_scanning_popup.dart';
 import '../../pop_ups/nfc_tag_popups.dart';
 
 class AdminRead extends StatefulWidget {
+  final void Function(bool isActive) updateNotificationState;
+
+  const AdminRead({required this.updateNotificationState});
+
   @override
   State<AdminRead> createState() => _AdminReadState();
 }
@@ -47,11 +51,14 @@ class _AdminReadState extends State<AdminRead> {
       );
 
       // Store the UserTransactionModel object in the Users collection
-      final String docId =
-          await UserTransactionDBHelper.insert(userTransactionModel);
-      print('User data stored in the database with document ID: $docId');
+      final bool dataInserted =
+          await TransactionDBHelper.insert(userTransactionModel);
+
+      if (dataInserted) {
+        widget.updateNotificationState(true);
+      }
     } catch (error) {
-      print('Failed to store user data: $error');
+      // Handle error
     }
   }
 
@@ -120,9 +127,10 @@ class _AdminReadState extends State<AdminRead> {
               );
             } else {
               final userData = userDataList[0];
+              final String fullDate = convertToFullDate(userData['day']);
               final List<Map<String, dynamic>> userDataItems = [
-                {'title': 'To', 'value': userData['to']},
-                {'title': 'Date', 'value': userData['day']},
+                {'title': 'From', 'value': userData['to']},
+                {'title': 'Date', 'value': fullDate},
                 {'title': 'Time', 'value': userData['time']},
                 {
                   'title': 'UPI Transaction ID',
