@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mastering_flutter/screens/pop_ups/nfc_availabilty_popup.dart';
 
 import 'NFC/services/nfc_services.dart';
 import 'authentication/services/auth_services.dart';
+import 'screens/pop_ups/nfc_availabilty_popup.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 100, // Adjust the desired width
                 height: 100, // Adjust the desired height
                 child: Image.asset(
-                  'assets/images/newlogo.png',
+                  'assets/images/nfc_plus.png',
                 ),
               ),
               const SizedBox(height: 200),

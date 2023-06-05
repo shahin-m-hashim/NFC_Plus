@@ -15,13 +15,13 @@ class AdminSettingsScreen extends StatelessWidget {
               Navigator.pushNamed(context, 'admin_account_settings');
             },
           ),
-          ListTile(
-            title: const Text('App Settings'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              Navigator.pushNamed(context, 'app_settings');
-            },
-          ),
+          // ListTile(
+          //   title: const Text('App Settings'),
+          //   trailing: const Icon(Icons.arrow_forward_ios),
+          //   onTap: () {
+          //     Navigator.pushNamed(context, 'app_settings');
+          //   },
+          // ),
           ListTile(
             title: const Text('About'),
             trailing: const Icon(Icons.arrow_forward_ios),

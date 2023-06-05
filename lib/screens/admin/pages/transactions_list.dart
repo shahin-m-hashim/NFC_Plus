@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mastering_flutter/screens/admin/pages/transactions_details.dart';
 
 import '../../../NFC/database/transaction_db_helper.dart';
 import '../../../NFC/models/user_transaction_model.dart';
+import 'transactions_details.dart';
 
 class TransactionList extends StatelessWidget {
   final ValueNotifier<List<UserTransactionModel>> transactionsNotifier =

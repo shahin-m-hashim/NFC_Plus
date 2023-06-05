@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:mastering_flutter/screens/admin/pages/notifications.dart';
-import 'package:mastering_flutter/screens/admin/pages/total_earnings.dart';
-import 'package:mastering_flutter/screens/admin/pages/transactions_list.dart';
+import 'screens/admin/pages/notifications.dart';
+import 'screens/admin/pages/total_earnings.dart';
+import 'screens/admin/pages/transactions_list.dart';
 import 'homescreen.dart';
 import 'screens/admin/admin_home.dart';
 import 'screens/admin/admin_login.dart';

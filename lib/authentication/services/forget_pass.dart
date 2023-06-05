@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mastering_flutter/authentication/services/validation.dart';
+
+import 'validation.dart';
 
 class ForgotPasswordDialog {
   static AlertDialog build(BuildContext context) {

@@ -43,6 +43,7 @@ dependencies:
   email_validator: ^2.1.17
   firebase_auth: ^4.2.2
   shared_preferences: ^2.1.0
+  flutter_native_splash: ^2.2.19
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +72,7 @@ flutter:
     - assets/images/nfc_radar.gif
     - assets/images/register.png
     - assets/images/newlogo.png
+    - assets/images/nfc_plus.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

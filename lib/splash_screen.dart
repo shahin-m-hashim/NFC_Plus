@@ -31,18 +31,10 @@ class _SplashScreenState extends State<SplashScreen> {
               width: 250, // Adjust the desired width
               height: 250, // Adjust the desired height
               child: Image.asset(
-                'assets/images/newlogo.png',
+                'assets/images/nfc_plus.png',
               ),
             ),
-            const SizedBox(height: 16),
-            const Text(
-              "NFC Pay",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 150),
+            const SizedBox(height: 160),
             const CircularProgressIndicator(
               color: Colors.red,
             ),
