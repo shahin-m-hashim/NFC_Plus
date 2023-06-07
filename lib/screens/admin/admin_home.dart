@@ -42,7 +42,7 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.asset(
-                'assets/images/newlogo.png',
+                'assets/images/nfc_plus.png',
                 width: 35,
                 height: 35,
               ),

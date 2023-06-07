@@ -29,11 +29,11 @@ class AdminSettingsScreen extends StatelessWidget {
               Navigator.pushNamed(context, 'about');
             },
           ),
-          ListTile(
-            title: const Text('Help'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {},
-          ),
+          // ListTile(
+          //   title: const Text('Help'),
+          //   trailing: const Icon(Icons.arrow_forward_ios),
+          //   onTap: () {},
+          // ),
         ],
       ),
     );
