@@ -1,4 +1,4 @@
-package com.example.mastering_flutter
+package com.example.NFC_Plus
 
 import io.flutter.embedding.android.FlutterActivity
 
