@@ -4,8 +4,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mastering_flutter/screens/pop_ups/nfc_scanning_popup.dart';
-import 'package:mastering_flutter/screens/pop_ups/nfc_tag_popups.dart';
+import 'package:NFC_Plus/screens/pop_ups/nfc_scanning_popup.dart';
+import 'package:NFC_Plus/screens/pop_ups/nfc_tag_popups.dart';
 
 import '../../NFC/services/nfc_services.dart';
 import '../pop_ups/random_transaction_popup.dart';
